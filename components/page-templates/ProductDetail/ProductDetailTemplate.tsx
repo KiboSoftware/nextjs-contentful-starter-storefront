@@ -27,6 +27,7 @@ import {
 } from '@/components/common'
 import { KiboBreadcrumbs, ImageGallery } from '@/components/core'
 import { AddToCartDialog, StoreLocatorDialog } from '@/components/dialogs'
+import CmsComponent from '@/components/home/CmsComponent/CmsComponent'
 import {
   ColorSelector,
   ProductInformation,

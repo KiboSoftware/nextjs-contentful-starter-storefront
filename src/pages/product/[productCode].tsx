@@ -3,6 +3,7 @@ import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 
 import { ProductDetailTemplate, ProductDetailSkeleton } from '@/components/page-templates'
+import { getPage } from '@/cms/operations/get-page'
 import getCategoryTree from '@/lib/api/operations/get-category-tree'
 import getProduct from '@/lib/api/operations/get-product'
 import search from '@/lib/api/operations/get-product-search'
@@ -16,14 +17,17 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const { productCode } = params as any
   const { serverRuntimeConfig } = getConfig()
 
+  const cmsProductDetail = await getPage({
+    entryUrl: productCode,
+  })
   const product = await getProduct(productCode)
   const categoriesTree: CategoryTreeResponse = await getCategoryTree()
 
   return {
     props: {
-      productCode,
       product,
       categoriesTree,
+      cmsProductDetail,
       ...(await serverSideTranslations(locale as string, ['common'])),
     },
     revalidate: serverRuntimeConfig.revalidate,
@@ -43,9 +47,8 @@ export async function getStaticPaths() {
 }
 
 const ProductDetailPage: NextPage = (props: any) => {
-  const { product } = props
+  const { product, cmsProductDetail } = props
   const { isFallback } = useRouter()
-
   if (isFallback) {
     return <ProductDetailSkeleton />
   }
@@ -53,7 +56,11 @@ const ProductDetailPage: NextPage = (props: any) => {
   const breadcrumbs = product ? productGetters.getBreadcrumbs(product) : []
   return (
     <>
-      <ProductDetailTemplate product={product} breadcrumbs={breadcrumbs} />
+      <ProductDetailTemplate
+        product={product}
+        breadcrumbs={breadcrumbs}
+        cmsProducts={cmsProductDetail}
+      />
     </>
   )
 }

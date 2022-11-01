@@ -38,4 +38,4 @@ afterAll(() => {
   server.close()
 })
 
-jest.setTimeout(80000)
+jest.setTimeout(90000)
