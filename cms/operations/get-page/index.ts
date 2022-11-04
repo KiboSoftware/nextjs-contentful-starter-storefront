@@ -1,5 +1,5 @@
 import contentful from '@/cms'
-import { contentfulGetters } from '@/lib/getters'
+import { contentfulGetters } from '@/cms/getters/contentfulGetters'
 
 interface PageProps {
   entryUrl: string
