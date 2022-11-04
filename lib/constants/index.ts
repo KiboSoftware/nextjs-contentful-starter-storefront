@@ -100,10 +100,6 @@ export const footerConfig = {
   ],
 }
 
-export enum CMS {
-  CONTENTFUL = 'contentful',
-}
-
 export enum DefaultId {
   ADDRESSID = 1,
 }

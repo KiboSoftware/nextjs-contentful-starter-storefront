@@ -80,7 +80,6 @@ module.exports = {
     defaultWishlistName: DEFAULT_WISHLIST_NAME,
     pciHost: process.env.KIBO_PCI_HOST,
     apiHost: process.env.KIBO_API_HOST,
-    cms: process.env.CMS || 'contentful',
     contentful: {
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       URL: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/master`,
