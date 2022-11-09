@@ -3,11 +3,12 @@ import { contentfulGetters } from '@/cms/getters/contentfulGetters'
 
 interface PageProps {
   entryUrl: string
+  preview?: boolean
 }
 
-const getContentfulPage = async (productCode: string) => {
+const getContentfulPage = async (productCode: string, preview: boolean) => {
   if (productCode) {
-    const response = await contentful.fetchProductDetails(productCode)
+    const response = await contentful.fetchProductDetails({ preview, productCode })
     const productData = contentfulGetters.getContentfulProductData(
       response?.data?.productDetailsCollection?.items[0]
     )
@@ -15,7 +16,7 @@ const getContentfulPage = async (productCode: string) => {
       components: productData || [],
     }
   } else {
-    const response = await contentful.fetchHomePage()
+    const response = await contentful.fetchHomePage({ preview })
     const homePageData = contentfulGetters.getContentfulPageData(
       response?.data?.homePageCollection?.items
     )
@@ -26,5 +27,5 @@ const getContentfulPage = async (productCode: string) => {
 }
 
 export const getPage = async (params: PageProps) => {
-  return getContentfulPage(params.entryUrl)
+  return getContentfulPage(params.entryUrl, params.preview || false)
 }

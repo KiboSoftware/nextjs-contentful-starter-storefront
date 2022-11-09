@@ -14,13 +14,15 @@ import type { CategorySearchParams, CategoryTreeResponse } from '@/lib/types'
 import type { NextPage, GetStaticPropsContext } from 'next'
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const { params, locale } = context
+  const { params, locale, preview = false } = context
   const { productCode } = params as any
   const { serverRuntimeConfig } = getConfig()
 
   const cmsProductDetail = await getPage({
     entryUrl: productCode,
+    preview,
   })
+
   const product = await getProduct(productCode)
   const categoriesTree: CategoryTreeResponse = await getCategoryTree()
 

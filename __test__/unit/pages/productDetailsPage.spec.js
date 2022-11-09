@@ -104,6 +104,7 @@ describe('[page] Product Details Page', () => {
         productCode: 'MS-BTL-001',
       },
       locale: 'mock-locale',
+      preview: false,
     }
 
     const response = getStaticProps(context)
@@ -115,6 +116,7 @@ describe('[page] Product Details Page', () => {
         },
         categoriesTree: mockCategoryTreeData.categoriesTree.items,
         cmsProductDetail: mockProductDetailResult,
+        preview: false,
         _nextI18Next: {
           initialI18nStore: { 'mock-locale': [{}], en: [{}] },
           initialLocale: 'mock-locale',
