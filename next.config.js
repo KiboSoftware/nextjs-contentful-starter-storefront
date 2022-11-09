@@ -101,6 +101,7 @@ module.exports = {
     cms: process.env.CMS || 'contentful',
     contentful: {
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      previewAccessToken: process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN,
       URL: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/master`,
     },
   },

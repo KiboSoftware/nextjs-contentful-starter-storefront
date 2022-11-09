@@ -10,19 +10,21 @@ import type { GetServerSidePropsContext } from 'next'
 
 interface HomePageProps {
   cmsPage: any
+  preview?: boolean
 }
-const getCmsHomePageData = async () => {
+const getCmsHomePageData = async ({ preview }: { preview?: boolean }) => {
   const cmsPage = await getPage({
     entryUrl: '',
+    preview,
   })
   return cmsPage
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { locale } = context
+  const { locale, preview = false } = context
   const categoriesTree: CategoryTreeResponse = await getCategoryTree()
 
-  const cmsPage = await getCmsHomePageData()
+  const cmsPage = await getCmsHomePageData({ preview })
   return {
     props: {
       categoriesTree,

@@ -32,6 +32,7 @@ import {
   LoginDialog,
   CheckoutHeader,
 } from '@/components/layout'
+import PreviewMode from '@/components/PreviewMode'
 import { useAuthContext, useHeaderContext, useModalContext } from '@/context'
 import { useCategoryTreeQueries } from '@/hooks'
 import type { NavigationLink } from '@/lib/types'
@@ -123,8 +124,26 @@ const TopHeader = ({
   isElementVisible: boolean
 }) => {
   const { t } = useTranslation('common')
+  const { isPreview } = useRouter()
 
   return (
+    <>
+      {isPreview && (
+        <Box sx={{ paddingLeft: '45%' }}>
+          <Box
+            sx={{
+              position: 'absolute',
+              backgroundColor: '#A12E87',
+              display: 'flex',
+              flexDirection: 'row',
+              zIndex: 1000,
+              margin: 0,
+            }}
+          >
+            <PreviewMode />
+          </Box>
+        </Box>
+      )}
     <Box
       sx={{ ...topHeaderStyles.wrapper, ...(!isElementVisible && { display: 'none' }) }}
       data-testid="top-bar"
@@ -141,8 +160,9 @@ const TopHeader = ({
             )
           })}
         </Box>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </>
   )
 }
 
