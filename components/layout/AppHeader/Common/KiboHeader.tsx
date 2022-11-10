@@ -18,6 +18,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import PreviewMode from '../../../../cms/PreviewMode'
 import { HeaderAction, KiboLogo } from '@/components/common'
 import {
   MegaMenu,
@@ -30,7 +31,6 @@ import {
   LoginDialog,
   CheckoutHeader,
 } from '@/components/layout'
-import PreviewMode from '@/components/PreviewMode'
 import { useAuthContext, useHeaderContext, useModalContext } from '@/context'
 import { useCategoryTreeQueries } from '@/hooks'
 import type { NavigationLink } from '@/lib/types'

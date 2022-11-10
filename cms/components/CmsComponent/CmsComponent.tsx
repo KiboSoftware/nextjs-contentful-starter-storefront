@@ -1,9 +1,7 @@
 import React from 'react'
 
-import KiboHeroCarousel from '../../../components/home/Carousel/KiboHeroCarousel'
-import ContentTile from '../../../components/home/ContentTile/ContentTile'
-import SmallBanner from '../../../components/home/SmallBanner/SmallBanner'
 import CmsHomePageProducts from '../CmsHomePageProducts/CmsHomePageProducts'
+import { KiboHeroCarousel, ContentTile, SmallBanner } from '@/components/home'
 import { ProductRecommendations } from '@/components/product'
 
 interface CmsComponentProps {
