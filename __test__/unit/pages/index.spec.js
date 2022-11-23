@@ -8,7 +8,7 @@ import Home, { getServerSideProps } from '@/pages/index'
 const mockCategoryTreeData = categoryTreeDataMock
 const mockHomePageResult = homePageResultMock || []
 const CmsComponentMock = () => <div data-testid="cms-component" />
-jest.mock('@/components/home/CmsComponent/CmsComponent', () => CmsComponentMock)
+jest.mock('@/cms/components/CmsComponent/CmsComponent', () => () => CmsComponentMock())
 const mockCmsHomePageResult = cmsHomePageResultMock
 const mockCmsResultDataMock = {
   cmsPage: {

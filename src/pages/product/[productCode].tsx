@@ -3,6 +3,7 @@ import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 
 import { ProductDetailTemplate, ProductDetailSkeleton } from '@/components/page-templates'
+import { CmsComponent } from '@/cms/components'
 import { getPage } from '@/cms/operations/get-page'
 import getCategoryTree from '@/lib/api/operations/get-category-tree'
 import getProduct from '@/lib/api/operations/get-product'
@@ -58,11 +59,12 @@ const ProductDetailPage: NextPage = (props: any) => {
   const breadcrumbs = product ? productGetters.getBreadcrumbs(product) : []
   return (
     <>
-      <ProductDetailTemplate
-        product={product}
-        breadcrumbs={breadcrumbs}
-        cmsProducts={cmsProductDetail}
-      />
+      <ProductDetailTemplate product={product} breadcrumbs={breadcrumbs}>
+        {cmsProductDetail?.components?.length > 0 &&
+          cmsProductDetail?.components?.map((data: any) => (
+            <CmsComponent key={Object.keys(data)[0]} content={data} />
+          ))}
+      </ProductDetailTemplate>
     </>
   )
 }

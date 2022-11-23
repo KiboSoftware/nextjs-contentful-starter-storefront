@@ -3,28 +3,32 @@ import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import CmsComponent from './CmsComponent'
+import { cmsHomePageResultMock } from '@/__mocks__/stories'
 
 // Home
 export default {
-  title: 'Home/CmsComponent',
+  title: 'Cms/CmsComponent',
   component: CmsComponent,
 } as ComponentMeta<typeof CmsComponent>
 
 const Template: ComponentStory<typeof CmsComponent> = (args) => <CmsComponent {...args} />
 
-export const Common = Template.bind({})
-Common.args = {
-  content: {
-    small_banner: {
-      title: 'Save up to 50%',
-      _metadata: {
-        uid: 'cs83e4eb0d334b088f',
-      },
-      subtitle: 'Valid until tomorrow!',
-      call_to_action_link: {
-        title: 'Shop Now',
-        href: '/category/deals',
-      },
-    },
-  },
+export const SmallBanner = Template.bind({})
+SmallBanner.args = {
+  content: cmsHomePageResultMock.find((data) => Object.keys(data)[0] === 'small_banner'),
+}
+
+export const HeroCarousel = Template.bind({})
+HeroCarousel.args = {
+  content: cmsHomePageResultMock.find((data) => Object.keys(data)[0] === 'hero_carousel'),
+}
+
+export const LargePromoBlocks = Template.bind({})
+LargePromoBlocks.args = {
+  content: cmsHomePageResultMock.find((data) => Object.keys(data)[0] === 'large_promo_blocks'),
+}
+
+export const SmallPromoBlocks = Template.bind({})
+SmallPromoBlocks.args = {
+  content: cmsHomePageResultMock.find((data) => Object.keys(data)[0] === 'small_promo_blocks'),
 }
