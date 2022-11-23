@@ -7,7 +7,6 @@ import { Box, Grid, Rating, Button, Typography, Divider, Link as MuiLink } from 
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 
-import CmsComponent from '@/cms/components/CmsComponent/CmsComponent'
 import { FulfillmentOptions, Price, QuantitySelector } from '@/components/common'
 import { KiboBreadcrumbs, ImageGallery } from '@/components/core'
 import { AddToCartDialog, StoreLocatorDialog } from '@/components/dialogs'

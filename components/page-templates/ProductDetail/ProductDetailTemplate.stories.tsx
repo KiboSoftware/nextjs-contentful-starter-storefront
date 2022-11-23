@@ -4,7 +4,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import ProductDetailTemplate from './ProductDetailTemplate'
 import { ProductCustomMock } from '@/__mocks__/stories'
-import { cmsProductDetailMock } from '@/__mocks__/stories/cmsProductDetailMock'
 
 export default {
   title: 'Page Templates/Product Detail',
@@ -24,9 +23,6 @@ Common.args = {
       link: '/',
     },
   ],
-  cmsProducts: {
-    components: cmsProductDetailMock,
-  },
 }
 
 export const WithPriceRange = Template.bind({})
@@ -45,17 +41,11 @@ WithPriceRange.args = {
       link: '/',
     },
   ],
-  cmsProducts: {
-    components: cmsProductDetailMock,
-  },
 }
 
 export const Mobile = Template.bind({})
 Mobile.args = {
   product: ProductCustomMock,
-  cmsProducts: {
-    components: cmsProductDetailMock,
-  },
 }
 Mobile.parameters = {
   viewport: {

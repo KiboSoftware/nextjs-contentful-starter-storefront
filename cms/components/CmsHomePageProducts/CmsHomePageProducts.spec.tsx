@@ -9,7 +9,7 @@ import * as stories from './CmsHomePageProducts.stories' // import all stories f
 const { Common } = composeStories(stories)
 
 const ProductCardMock = () => <div data-testid="product-card-mock" />
-jest.mock('@/components/product/ProductCard/ProductCard', () => ProductCardMock)
+jest.mock('@/components/product/ProductCard/ProductCard', () => () => ProductCardMock())
 
 describe('[component] CmsHomePageProducts', () => {
   it('should render component', async () => {
