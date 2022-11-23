@@ -61,14 +61,25 @@ CONTENTFUL_SPACE_ID=12345_Secret_SpaceId
 The following data is required to configure the storefront to communicate with your Kibo API Client.
 
 - `apiHost` - Your Kibo Commerce API Host.
-- `authHost` - Kibo Commerce Authentication Host Server. It is used to request an access token from Kibo Commerce OAuth 2.0 service. Production and Production sandbox, use `home.mozu.com`
-- `clientId` - Unique Application (Client) ID of your Application
-- `sharedSecret` - Secret API key used to authenticate application. Viewable from your [Kibo eCommerce Dev Center](https://mozu.com/login)
-- `contentful-access-token` - Unique token used to authenticate your contentful cms
-- `Contentful-preview-mode` - Unique token used to authenticate preview mode for contentful
-- `Contentful-space-id`- Unqiue space id to identify contentful application space
+- `authHost` - Kibo Commerce Authentication Host Server. It is used to request an access token from Kibo Commerce OAuth 2.0 service. Production and Production sandbox, use `home.mozu.com`.
+- `clientId` - Unique Application (Client) ID of your Application.
+- `sharedSecret` - Secret API key used to authenticate application. Viewable from your [Kibo eCommerce Dev Center](https://mozu.com/login).
 
 Visit [Kibo documentation](https://apidocs.kibong-perf.com/?spec=graphql#auth) for more details on API authentication
+
+next.config.js example
+
+```bash
+contentFulAccessToken= 123_access_token
+contentFulPreviewToken= 123_preview_token
+contentFulSpaceId= 123_space_id
+```
+
+The following data is required to configure the storefront to communicate with your Contentful cms.
+
+- `contentful-access-token` - Unique token used to authenticate your contentful cms
+- `Contentful-preview-token` - Unique token used to authenticate preview mode for contentful
+- `Contentful-space-id`- Unqiue space id to identify contentful application space
 
 ## Useful Commands
 
@@ -91,14 +102,10 @@ npm run test # run unit / integration tests
 
 ## Pre-requisite
 
-​
-
 - Follow Steps mentioned in link for configuring contentful cms (https://github.com/KiboSoftware/contentful-space)
 - Next, after above step data can be created on contentful website (Need an account prior on contentful cms)
 
 ## Running Contentful in Preview Mode
-
-​
 
 - Enable Preview Mode(HomePage/PDP Page)
   1. Add /api/contentful/enable-preview to the application url , which will run your application in preview mode
