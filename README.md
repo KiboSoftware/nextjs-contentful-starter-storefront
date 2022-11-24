@@ -67,19 +67,23 @@ The following data is required to configure the storefront to communicate with y
 
 Visit [Kibo documentation](https://apidocs.kibong-perf.com/?spec=graphql#auth) for more details on API authentication
 
-next.config.js example
-
-```bash
-contentFulAccessToken= 123_access_token
-contentFulPreviewToken= 123_preview_token
-contentFulSpaceId= 123_space_id
+```javascript
+// next.config.js
+{
+  //...other config
+   contentful: {
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      previewAccessToken: process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN,
+      URL: `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/master`,
+    }
+  }
 ```
 
-The following data is required to configure the storefront to communicate with your Contentful cms.
+The following above data is required to configure the storefront to communicate with your Contentful cms.
 
-- `contentful-access-token` - Unique token used to authenticate your contentful cms
-- `Contentful-preview-token` - Unique token used to authenticate preview mode for contentful
-- `Contentful-space-id`- Unqiue space id to identify contentful application space
+- `CONTENTFUL_ACCESS_TOKEN` - Unique token used to authenticate your contentful cms
+- `CONTENTFUL_PREVIEW_ACCESS_TOKEN` - Unique token used to authenticate preview mode for contentful
+- `CONTENTFUL_SPACE_ID`- Unqiue space id to identify contentful application space
 
 ## Useful Commands
 
