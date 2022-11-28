@@ -1,9 +1,20 @@
+import { render, screen } from '@testing-library/react'
+
 import { categoryTreeDataMock } from '@/__mocks__/stories/categoryTreeDataMock'
+import { cmsHomePageResultMock } from '@/__mocks__/stories/cmsHomePageResultMock'
 import { homePageResultMock } from '@/__mocks__/stories/homePageResultMock'
-import { getServerSideProps } from '@/pages/index'
+import Home, { getServerSideProps } from '@/pages/index'
 
 const mockCategoryTreeData = categoryTreeDataMock
 const mockHomePageResult = homePageResultMock || []
+const CmsComponentMock = () => <div data-testid="cms-component" />
+jest.mock('@/cms/components/CmsComponent/CmsComponent', () => () => CmsComponentMock())
+const mockCmsHomePageResult = cmsHomePageResultMock
+const mockCmsResultDataMock = {
+  cmsPage: {
+    components: mockCmsHomePageResult,
+  },
+}
 
 jest.mock('next/config', () => {
   return () => ({
@@ -32,9 +43,16 @@ jest.mock('@/lib/api/util', () => ({
     return Promise.resolve({
       data: {
         categoriesTree: { items: mockCategoryTreeData.categoriesTree?.items },
+        cmsPage: mockCmsHomePageResult,
         carouselItem: mockHomePageResult,
       },
     })
+  }),
+}))
+
+jest.mock('@/cms/operations/get-page', () => ({
+  getPage: jest.fn(() => {
+    return Promise.resolve(mockCmsHomePageResult)
   }),
 }))
 
@@ -51,6 +69,10 @@ jest.mock('next-i18next/serverSideTranslations', () => ({
 }))
 
 describe('Home', () => {
+  const setup = (args) => {
+    render(<Home {...args} />)
+  }
+
   it('should run getServerSideProps method', () => {
     const context = {
       params: {},
@@ -66,8 +88,18 @@ describe('Home', () => {
           userConfig: { i18n: [{}] },
         },
         categoriesTree: mockCategoryTreeData.categoriesTree.items,
+        cmsPage: mockCmsHomePageResult,
         carouselItem: mockHomePageResult,
+        preview: false,
       },
     })
+  })
+
+  it('renders without crashing', () => {
+    setup(mockCmsResultDataMock)
+
+    const CmsComponent = screen.getAllByTestId('cms-component')
+
+    expect(CmsComponent.length).toEqual(mockCmsResultDataMock?.cmsPage?.components?.length)
   })
 })

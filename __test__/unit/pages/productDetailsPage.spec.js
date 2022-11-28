@@ -7,9 +7,13 @@ import ProductDetailPage, {
   getStaticProps,
 } from '../../../pages/product/[productCode]'
 import { categoryTreeDataMock } from '@/__mocks__/stories/categoryTreeDataMock'
+import { cmsProductDetailMock } from '@/__mocks__/stories/cmsProductDetailMock'
 
 nextRouter.useRouter = jest.fn()
 const mockCategoryTreeData = categoryTreeDataMock
+const mockProductDetailResult = {
+  components: cmsProductDetailMock,
+}
 
 jest.mock('next/config', () => () => ({
   publicRuntimeConfig: {
@@ -21,6 +25,12 @@ jest.mock('next/config', () => () => ({
   },
 }))
 
+jest.mock('@/cms/operations/get-page', () => ({
+  getPage: jest.fn(() => {
+    return Promise.resolve(mockProductDetailResult)
+  }),
+}))
+
 jest.mock('@/lib/api/util', () => ({
   fetcher: jest.fn(() => {
     return Promise.resolve({
@@ -29,6 +39,7 @@ jest.mock('@/lib/api/util', () => ({
           productCode: 'mocked-product',
         },
         categoriesTree: { items: mockCategoryTreeData.categoriesTree?.items },
+        cmsProductDetail: mockProductDetailResult,
         products: {
           items: [
             {
@@ -93,6 +104,7 @@ describe('[page] Product Details Page', () => {
         productCode: 'MS-BTL-001',
       },
       locale: 'mock-locale',
+      preview: false,
     }
 
     const response = getStaticProps(context)
@@ -103,6 +115,8 @@ describe('[page] Product Details Page', () => {
           productCode: 'mocked-product',
         },
         categoriesTree: mockCategoryTreeData.categoriesTree.items,
+        cmsProductDetail: mockProductDetailResult,
+        preview: false,
         _nextI18Next: {
           initialI18nStore: { 'mock-locale': [{}], en: [{}] },
           initialLocale: 'mock-locale',
