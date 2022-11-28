@@ -18,7 +18,6 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import PreviewMode from '../../../../cms/PreviewMode'
 import { HeaderAction, KiboLogo } from '@/components/common'
 import {
   MegaMenu,
@@ -118,47 +117,28 @@ const TopHeader = ({
   isElementVisible: boolean
 }) => {
   const { t } = useTranslation('common')
-  const { isPreview } = useRouter()
 
   return (
-    <>
-      {isPreview && (
-        <Box sx={{ paddingLeft: '45%' }}>
-          <Box
-            sx={{
-              position: 'absolute',
-              backgroundColor: '#A12E87',
-              display: 'flex',
-              flexDirection: 'row',
-              zIndex: 1000,
-              margin: 0,
-            }}
-          >
-            <PreviewMode />
-          </Box>
+    <Box
+      sx={{ ...topHeaderStyles.wrapper, ...(!isElementVisible && { display: 'none' }) }}
+      data-testid="top-bar"
+    >
+      <Container maxWidth="xl" sx={{ ...topHeaderStyles.container }}>
+        <Box display="flex" justifyContent="flex-end" alignItems="center" gap={5}>
+          {navLinks?.map((nav, index) => {
+            return (
+              <Box key={index}>
+                <Link href={nav.link} passHref>
+                  <MuiLink underline="none" color="common.white">
+                    <Typography variant="body2"> {t(`${nav.text}`)}</Typography>
+                  </MuiLink>
+                </Link>
+              </Box>
+            )
+          })}
         </Box>
-      )}
-      <Box
-        sx={{ ...topHeaderStyles.wrapper, ...(!isElementVisible && { display: 'none' }) }}
-        data-testid="top-bar"
-      >
-        <Container maxWidth="xl" sx={{ ...topHeaderStyles.container }}>
-          <Box display="flex" justifyContent="flex-end" alignItems="center" gap={5}>
-            {navLinks?.map((nav, index) => {
-              return (
-                <Box key={index}>
-                  <Link href={nav.link} passHref>
-                    <MuiLink underline="none" color="common.white">
-                      <Typography variant="body2"> {t(`${nav.text}`)}</Typography>
-                    </MuiLink>
-                  </Link>
-                </Box>
-              )
-            })}
-          </Box>
-        </Container>
-      </Box>
-    </>
+      </Container>
+    </Box>
   )
 }
 

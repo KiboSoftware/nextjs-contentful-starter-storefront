@@ -3,8 +3,6 @@ import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 
 import nextI18NextConfig from '../../next-i18next.config'
-import { CmsComponent } from '@/cms/components'
-import { getPage } from '@/cms/operations/get-page'
 import { ProductDetailTemplate } from '@/components/page-templates'
 import getCategoryTree from '@/lib/api/operations/get-category-tree'
 import getProduct from '@/lib/api/operations/get-product'
@@ -15,24 +13,19 @@ import type { CategorySearchParams, CategoryTreeResponse } from '@/lib/types'
 import type { NextPage, GetStaticPropsContext } from 'next'
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const { params, locale, preview = false } = context
+  const { params, locale } = context
   const { productCode } = params as any
   const { serverRuntimeConfig } = getConfig()
-
-  const cmsProductDetail = await getPage({
-    entryUrl: productCode,
-    preview,
-  })
 
   const product = await getProduct(productCode)
   const categoriesTree: CategoryTreeResponse = await getCategoryTree()
 
   return {
     props: {
+      productCode,
       product,
       categoriesTree,
-      cmsProductDetail,
-      ...(await serverSideTranslations(locale as string, ['common', 'product'], nextI18NextConfig)),
+      ...(await serverSideTranslations(locale as string, ['common'], nextI18NextConfig)),
     },
     revalidate: serverRuntimeConfig.revalidate,
   }
@@ -51,8 +44,9 @@ export async function getStaticPaths() {
 }
 
 const ProductDetailPage: NextPage = (props: any) => {
-  const { product, cmsProductDetail } = props
+  const { product } = props
   const { isFallback } = useRouter()
+
   if (isFallback) {
     return <>Fallback</>
   }
@@ -60,12 +54,7 @@ const ProductDetailPage: NextPage = (props: any) => {
   const breadcrumbs = product ? productGetters.getBreadcrumbs(product) : []
   return (
     <>
-      <ProductDetailTemplate product={product} breadcrumbs={breadcrumbs}>
-        {cmsProductDetail?.components?.length > 0 &&
-          cmsProductDetail?.components?.map((data: any) => (
-            <CmsComponent key={Object.keys(data)[0]} content={data} />
-          ))}
-      </ProductDetailTemplate>
+      <ProductDetailTemplate product={product} breadcrumbs={breadcrumbs} />
     </>
   )
 }

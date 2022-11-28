@@ -1,8 +1,8 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import nextI18NextConfig from '../next-i18next.config'
-import CmsComponent from '@/cms/components/CmsComponent/CmsComponent'
-import { getPage } from '@/cms/operations/get-page'
+import { homePageResultMock } from '@/__mocks__/stories'
+import KiboHeroCarousel from '@/components/home/Carousel/KiboHeroCarousel'
 import { FullWidthLayout } from '@/components/layout'
 import getCategoryTree from '@/lib/api/operations/get-category-tree'
 import type { CategoryTreeResponse, NextPageWithLayout } from '@/lib/types'
@@ -10,40 +10,26 @@ import type { CategoryTreeResponse, NextPageWithLayout } from '@/lib/types'
 import type { GetServerSidePropsContext } from 'next'
 
 interface HomePageProps {
-  cmsPage: any
-  preview?: boolean
+  carouselItem: any
 }
-const getCmsHomePageData = async ({ preview }: { preview?: boolean }) => {
-  const cmsPage = await getPage({
-    entryUrl: '',
-    preview,
-  })
-  return cmsPage
-}
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { locale, preview = false } = context
+  const { locale } = context
   const categoriesTree: CategoryTreeResponse = await getCategoryTree()
 
-  const cmsPage = await getCmsHomePageData({ preview })
   return {
     props: {
       categoriesTree,
-      cmsPage,
-      preview,
+      carouselItem: homePageResultMock,
       ...(await serverSideTranslations(locale as string, ['common'], nextI18NextConfig)),
     },
   }
 }
 
 const Home: NextPageWithLayout<HomePageProps> = (props) => {
-  const { cmsPage } = props
-
+  const { carouselItem } = props
   return (
     <>
-      {cmsPage?.components?.map((data: any) => (
-        <CmsComponent key={Object.keys(data)[0]} content={data} />
-      ))}
+      <KiboHeroCarousel carouselItem={carouselItem || []}></KiboHeroCarousel>
     </>
   )
 }
